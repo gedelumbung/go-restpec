@@ -11,7 +11,16 @@ func main() {
 	http.HandleFunc("/200", func(rw http.ResponseWriter, r *http.Request) {
 		restpec.Ok(rw,
 			"Well done!!",
-			map[string]interface{}{},
+			[]User{
+				User{
+					ID:   1,
+					Name: "Gede",
+				},
+				User{
+					ID:   2,
+					Name: "Ayu",
+				},
+			},
 			map[string]interface{}{
 				"pagination": NewPagination(40, 1, 5),
 			})
@@ -20,22 +29,45 @@ func main() {
 		restpec.BadRequest(rw,
 			"Your request is invalid",
 			nil,
-			map[string]interface{}{})
+			nil)
 	})
 	http.HandleFunc("/401", func(rw http.ResponseWriter, r *http.Request) {
 		restpec.Unauthorized(rw,
 			"Error code response for missing or invalid authentication token",
 			nil,
-			map[string]interface{}{})
+			nil)
 	})
 	http.HandleFunc("/403", func(rw http.ResponseWriter, r *http.Request) {
 		restpec.Forbidden(rw,
 			"You cannot access this route",
 			nil,
-			map[string]interface{}{})
+			nil)
+	})
+	http.HandleFunc("/404", func(rw http.ResponseWriter, r *http.Request) {
+		restpec.Forbidden(rw,
+			"Your request is not found",
+			nil,
+			nil)
+	})
+	http.HandleFunc("/405", func(rw http.ResponseWriter, r *http.Request) {
+		restpec.Forbidden(rw,
+			"You method is not allowed",
+			nil,
+			nil)
+	})
+	http.HandleFunc("/422", func(rw http.ResponseWriter, r *http.Request) {
+		restpec.Forbidden(rw,
+			"We cannot process your entity",
+			nil,
+			nil)
 	})
 
 	http.ListenAndServe(":8080", nil)
+}
+
+type User struct {
+	ID   int
+	Name string
 }
 
 type Pagination struct {
