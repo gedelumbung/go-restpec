@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/gedelumbung/go-restpec.svg?branch=master)](https://travis-ci.org/gedelumbung/go-restpec)
 
 # RestPec
 Simple library to handle HTTP Status Code, because we need more respect to HTTP Status Code :p
